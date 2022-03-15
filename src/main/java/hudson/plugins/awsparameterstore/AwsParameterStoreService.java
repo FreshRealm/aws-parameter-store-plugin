@@ -65,7 +65,6 @@ import org.apache.commons.lang.StringUtils;
  * AWS Parameter Store client.
  *
  * @author Rik Turnbull
- *
  */
 public class AwsParameterStoreService {
   public static final String DEFAULT_REGION = "us-east-1";
@@ -225,10 +224,10 @@ public class AwsParameterStoreService {
       try {
         String envVarName = toEnvironmentVariable(name, getParameterPath(name), naming);
 
-        String value = client
-          .getParameter(getParameterRequest)
-          .getParameter()
-          .getValue();
+        String value = client.
+                        getParameter(getParameterRequest).
+                        getParameter().
+                        getValue();
 
         context.env(envVarName, value);
       } catch(Exception e) {
@@ -251,10 +250,10 @@ public class AwsParameterStoreService {
       DescribeParametersRequest describeParametersRequest = new DescribeParametersRequest().withMaxResults(1);
       if (!StringUtils.isEmpty(namePrefixes)) {
         describeParametersRequest = describeParametersRequest.withParameterFilters(
-          new ParameterStringFilter()
-            .withKey("Name")
-            .withOption("BeginsWith")
-            .withValues(namePrefixes.split(","))
+          new ParameterStringFilter().
+            withKey("Name").
+            withOption("BeginsWith").
+            withValues(namePrefixes.split(","))
         );
       }
 
@@ -287,10 +286,11 @@ public class AwsParameterStoreService {
     LOGGER.log(Level.INFO, "Fetching all parameters by path: \"" + path + "\"");
 
     try {
-      final GetParametersByPathRequest getParametersByPathRequest = new GetParametersByPathRequest()
-        .withPath(path)
-        .withRecursive(recursive)
-        .withWithDecryption(true);
+      final GetParametersByPathRequest getParametersByPathRequest =
+        new GetParametersByPathRequest().
+              withPath(path).
+              withRecursive(recursive).
+              withWithDecryption(true);
 
       do {
         final GetParametersByPathResult getParametersByPathResult = client.getParametersByPath(getParametersByPathRequest);
